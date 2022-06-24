@@ -28,3 +28,5 @@ for char in inputstr:
         vovel_count[char] += 1
 
 print(vovel_count)
+
+owels
