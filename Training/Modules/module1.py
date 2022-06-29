@@ -7,5 +7,6 @@ patient = {
     'profession': 'developer'
 }
 
+
 def print_detail(details):
     print(details)
