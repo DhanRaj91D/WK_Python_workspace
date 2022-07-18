@@ -2,7 +2,7 @@
     "patients_list": [
         {
             "patient_id": 1,
-            "firstName": "Joe",
+            "firstName": "Ram",
             "lastName": "Jackson",
             "gender": "male",
             "age": 28,
