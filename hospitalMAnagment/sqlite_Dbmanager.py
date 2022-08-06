@@ -5,6 +5,14 @@ conn = sqlite3.connect('patient.db')
 cursor = conn.cursor()
 
 
+def initialize_conn():
+    try:
+        con = sqlite3.connect(r'patient.db')
+        return con
+    except Exception as e:
+        print(e)
+
+
 def create_table():
     cursor.execute("""CREATE TABLE patients(
                     patient_id integer, 
@@ -15,7 +23,7 @@ def create_table():
                     )""")
 
 
-def insert_patient(patient_p):
+def insert_patient(conn, patient_p):
     with conn:
         cursor.execute("INSERT INTO patients VALUES(:patient_id, :firstname, :lastname, :gender, :age)",
                        {'patient_id': patient_p.patient_id, 'firstname': patient_p.firstName,
@@ -23,9 +31,23 @@ def insert_patient(patient_p):
                         'gender': patient_p.gender, 'age': patient_p.age})
 
 
+def insert_patient_from_flask(con, patient_id, firstName, lastName, gender, age):
+    with con:
+        con.cursor().execute("INSERT INTO patients VALUES(:patient_id, :firstname, :lastname, :gender, :age)",
+                             {'patient_id': int(patient_id), 'firstname': firstName,
+                              'lastname': lastName,
+                              'gender': gender, 'age': int(age)})
+
+
 def get_patient_by_name(name):
     cursor.execute("SELECT * FROM patients WHERE firstname=:firstname", {'firstname': name})
     return cursor.fetchall()
+
+
+def get_all_patients_from_flask(con):
+    con.cursor().execute("SELECT * FROM patients")
+    allpatent = cursor.fetchall()
+    return allpatent
 
 
 def get_all_patients():
@@ -33,10 +55,9 @@ def get_all_patients():
     return cursor.fetchall()
 
 
-def update_patient_age(patient_id, age):
-    with conn:
-        cursor.execute(f"""UPDATE patients SET {age} = ? WHERE patient_id = ?""",
-                       (age, patient_id))
+def update_patient_age(p_id, age):
+    conn.execute(f"update patients set age={age} where patient_id={p_id}")
+    conn.commit()
 
 
 # "UPDATE patients SET age = age WHERE patient_id = patient_id ",

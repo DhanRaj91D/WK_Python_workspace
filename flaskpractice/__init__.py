@@ -1,5 +1,5 @@
-import sqlite_Dbmanager as DbManager
-from patient import patient
+import hospitalMAnagment.sqlite_Dbmanager as DbManager
+from hospitalMAnagment.patient import patient
 
 
 # patient_p = patient(1, "Shree", "Ram", "male", 24)
