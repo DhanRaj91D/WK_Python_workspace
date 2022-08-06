@@ -58,7 +58,9 @@ def show_patient_menu():
             print("Enter patient id to delete patient :")
             patient_id = int(input())
             DbManager.delete_patient(patient_id)
+            print("Patient deleted successfully")
             show_patient_menu()
+
 
         case 4:
             print("Are you sure you want to delete all patients (y/n): ")
